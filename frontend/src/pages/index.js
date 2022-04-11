@@ -1,6 +1,14 @@
+import NavBar from '../components/navBar'
+import Head from 'next/head'
+
 const Home = () => {
     return (
-        <h1>HOLA MUNDO</h1>
+        <>
+            <Head>
+                <link rel='icon' type='image/x-icon' href='/logo.png' />
+            </Head>
+            <NavBar />
+        </>
     )
 }
 
