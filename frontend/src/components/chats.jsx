@@ -1,8 +1,10 @@
-const Chats = ({children}) => {
+const Chats = ({messages}) => {
     return (
         <>
             <div className='y-scroll'>
-                {children}
+                {messages.map((message, index) =>
+                    <h1 key={index}>{message.message}</h1>
+                )}
             </div>
             <style jsx>{`
                 div {
