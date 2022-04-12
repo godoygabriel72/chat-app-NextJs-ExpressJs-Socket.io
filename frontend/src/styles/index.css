@@ -12,4 +12,9 @@ a {
     text-decoration: none;
 }
   
+.y-scroll::-webkit-scrollbar {
+    display: none;
+    overflow-y: scroll;
+}
+  
   

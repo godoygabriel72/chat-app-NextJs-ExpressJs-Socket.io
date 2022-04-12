@@ -2,6 +2,8 @@ import Head from 'next/head'
 import io from'socket.io-client'
 import { useEffect } from 'react'
 import Layout from '../components/layout'
+import Chats from '../components/chats'
+import MessageInput from '../components/messageInput'
 
 const Home = () => {
 
@@ -13,13 +15,20 @@ const Home = () => {
         })
     }, [])
 
+    const handleSave = message => {
+        console.log(message)
+    }
+
     return (
         <>
             <Head>
                 <link rel='icon' type='image/x-icon' href='/logo.png' />
             </Head>
             <Layout>
-                <h1>Hola Mundo</h1>
+                    <Chats>
+
+                    </Chats>
+                    <MessageInput onSave={handleSave} />
             </Layout>
         </>
     )
