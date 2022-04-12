@@ -1,10 +1,9 @@
-import NavBar from '../components/navBar'
 import Head from 'next/head'
-import fetch from'isomorphic-fetch'
 import io from'socket.io-client'
 import { useEffect } from 'react'
+import Layout from '../components/layout'
 
-const Home = ({messages}) => {
+const Home = () => {
 
     useEffect(() => {
         const socket = io('http://localhost:3001/')
@@ -19,8 +18,9 @@ const Home = ({messages}) => {
             <Head>
                 <link rel='icon' type='image/x-icon' href='/logo.png' />
             </Head>
-            <NavBar />
-            <h1>{messages}</h1>
+            <Layout>
+                <h1>Hola Mundo</h1>
+            </Layout>
         </>
     )
 }

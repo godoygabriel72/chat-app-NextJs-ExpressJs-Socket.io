@@ -18,8 +18,8 @@ const NavBar = () => {
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
-                    width: 100vw;
-                    height: 4.5rem;
+                    width: 100%;
+                    height: 100%;
                     background: #000;
                     padding: 0 0.75rem;
                 }
