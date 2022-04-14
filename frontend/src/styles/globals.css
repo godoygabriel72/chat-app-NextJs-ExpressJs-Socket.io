@@ -29,4 +29,8 @@ a {
     z-index: 30;
 }
   
+.outlineHover:hover {
+    outline: 2px solid cyan;
+    border-bottom: 1px solid cyan;
+}
   
