@@ -5,13 +5,24 @@ import NameInput from '../components/registy/nameInput'
 import styles from '../styles/Registry.module.css'
 import Head from 'next/head'
 import Image from 'next/image'
+import usePost from '../hooks/usePost'
+import { useEffect } from 'react'
 
 const Registry = () => {
 
+    const {data, statusCode, fetch} = usePost('/auth/singin')
+
     const formik = useFormik({
         initialValues: { Nombre: '', Email: '', Password: '' },
-        onSubmit: values => console.log(values)
+        onSubmit: (values, { resetForm }) => {
+            fetch(values)
+            resetForm()
+        }
     })
+
+    useEffect(() => {
+        statusCode === 200 && console.log(data)
+    }, [statusCode])
 
     return (
         <div className={styles.contenedor}>

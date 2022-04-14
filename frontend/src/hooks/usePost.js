@@ -7,7 +7,7 @@ const usePost = (path) => {
   const [error, setError] = useState(false)
   const [statusCode, setStatusCode] = useState(0)
 
-  const handlePost = async (object) => {
+  const fetch = async (object) => {
     setLoading(true)
     setStatusCode(0)
     try {
@@ -19,10 +19,6 @@ const usePost = (path) => {
     }
     setLoading(false)
   }
-
-  const fetch = useCallback(() => {
-    handlePost();
-  }, [handlePost]);
 
   return { data, loading, error, statusCode, fetch }
 }
