@@ -15,9 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors())
 
 const server = http.createServer(app)
-const io = new WebSocketServer(server, {
-    cors: { origin: "http://localhost:3000", methods: ["GET", "POST"] }
-})
+const io = new WebSocketServer(server, { cors: { origin: "http://localhost:3000", methods: ["GET", "POST"] } })
 
 io.on('connection', (socket) => {
     socket.on('client:newMessage', newMessage => {
@@ -32,24 +30,45 @@ app.get('/messages', (req, res) => {
 })
 
 app.get('/users', (req, res) => {
-    const usersList = []
-    users.forEach(
-        ({id, Nombre, Email}) => usersList.push({id, Nombre, Email})
-    )
+    let usersList = []
+    users.forEach( ({id, Nombre, Email}) => usersList.push({id, Nombre, Email}) )
     res.status(200).json(usersList).end()
 })
 
+app.post('/auth/singup', (req, res) => {
+    setTimeout(async () => {
+        const { Nombre, Email, Password } = req.body
+        if(Nombre && Email && Password) {
+            const PasswordHash = await encryptPassword(Password)
+            const user = { id: uuid(), Nombre, Email, Password: PasswordHash }
+            users.push(user)
+            let userCopy = {...user }
+            delete userCopy.Password
+            res.status(200).json(userCopy).end()
+        } else {
+            res.status(400).json({ message: 'Nombre, Email y Password son campos requeridos' }).end()
+        }
+    }, 1000);
+})
+
 app.post('/auth/singin', (req, res) => {
-    const { Nombre, Email, Password } = req.body
-    if(Nombre && Email && Password) {
-        const PasswordHash = encryptPassword(Password)
-        const user = { id: uuid(), Nombre, Email, Password: PasswordHash }
-        users.push(user)
-        delete user.Password
-        res.status(200).json(user).end()
-    } else {
-        res.status(400).json({ message: 'Nombre, Email y Password son campos requeridos' }).end()
-    }
+    setTimeout(async () => {
+        const { Email, Password } = req.body
+        if(Email && Password) {
+            const user = users.find(u => u.Email === Email)
+            if(!user) return res.status(404).json({ message: 'Usuario no encontrado' }).end()
+            const isCorrectPassword = await comparePassword(Password, user?.Password)
+            if(isCorrectPassword) {
+                let userCopy = {...user }
+                delete userCopy.Password
+                res.status(200).json(userCopy).end()
+            } else {
+                res.status(401).json({ message: 'Contraseña incorrecta' }).end()
+            }
+        } else {
+            res.status(400).json({ message: 'Email y Password son campos requeridos' }).end()
+        }
+    }, 1000);
 })
 
 server.listen(3001)
