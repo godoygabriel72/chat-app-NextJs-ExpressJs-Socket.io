@@ -10,6 +10,7 @@ const useGetAll = (path) => {
   const handleGetAll = async () => {
     setLoading(true)
     setStatusCode(0)
+    error && setError(null)
     try {
       const { data: response, status } = await Axios.get(path, { validateStatus: false })
       setData(response)

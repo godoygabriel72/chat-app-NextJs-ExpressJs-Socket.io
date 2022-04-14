@@ -10,6 +10,7 @@ const usePost = (path) => {
   const fetch = async (object) => {
     setLoading(true)
     setStatusCode(0)
+    error && setError(null)
     try {
       const { data: response, status } = await Axios.post(path, object, { validateStatus: false })
       setData(response)
