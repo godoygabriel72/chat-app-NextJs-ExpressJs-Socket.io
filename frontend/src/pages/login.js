@@ -6,7 +6,6 @@ import useGetAll from '../hooks/useGetAll'
 import usePost from '../hooks/usePost'
 import {ChooseUser , EnterPassword} from '../components/login'
 import userStore from '../store/userStore'
-import Loader from '../components/common/loader'
 import LoaderPage from '../components/common/loaderPage'
 
 const Login = () => {
@@ -55,7 +54,10 @@ const Login = () => {
         <ChooseUser userList={userList} onClick={handleUserSelect} /> :
         <>
             {_signin.loading && <LoaderPage />}
-            <EnterPassword onSave={handleSubmitForm} onResetUser={handleResetUser} Email={selectedUser?.Email}/> 
+            <EnterPassword  onSave={handleSubmitForm} 
+                            onResetUser={handleResetUser} 
+                            email={selectedUser?.Email}
+                            incorrectPassword={_signin.statusCode === 401}/> 
         </>
     )
 }

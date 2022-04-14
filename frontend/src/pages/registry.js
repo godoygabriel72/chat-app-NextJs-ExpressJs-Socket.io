@@ -3,10 +3,9 @@ import { useFormik } from 'formik'
 import { useEffect } from 'react'
 import Image from 'next/image'
 
-import { EmailInput, NameInput, PasswordInput } from '../components/registy'
+import { EmailInput, NameInput, PasswordInput } from '../components/registry'
 import styles from '../styles/Registry.module.css'
 import userStore from '../store/userStore'
-import Loader from '../components/common/loader'
 import usePost from '../hooks/usePost'
 import LoaderPage from '../components/common/loaderPage'
 
