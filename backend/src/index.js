@@ -35,7 +35,7 @@ app.get('/users', (req, res) => {
     res.status(200).json(usersList).end()
 })
 
-app.post('/auth/singup', (req, res) => {
+app.post('/auth/signup', (req, res) => {
     setTimeout(async () => {
         const { Nombre, Email, Password } = req.body
         if(Nombre && Email && Password) {
@@ -51,7 +51,7 @@ app.post('/auth/singup', (req, res) => {
     }, 1000);
 })
 
-app.post('/auth/singin', (req, res) => {
+app.post('/auth/signin', (req, res) => {
     setTimeout(async () => {
         const { Email, Password } = req.body
         if(Email && Password) {

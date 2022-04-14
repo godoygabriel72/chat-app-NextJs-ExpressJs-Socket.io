@@ -5,7 +5,7 @@ export const encryptPassword = async (password) => {
     return await bcryptjs.hash(password, salt)
   }
   
-  export const comparePassword = async (password, receivedPassword) => {
-    return await bcryptjs.compare(password, receivedPassword);
+  export const comparePassword = async (password, passwordHash) => {
+    return await bcryptjs.compare(password, passwordHash);
   }
   
