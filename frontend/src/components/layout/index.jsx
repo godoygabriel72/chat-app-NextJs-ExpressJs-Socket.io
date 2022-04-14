@@ -20,8 +20,13 @@ const Layout = ({children}) => {
                     position: relative;
                     width: 100vw;
                     height: calc(100vh - 4.5rem);
-                    padding: 0 15rem;
+                    padding: 0 1rem;
                     background: #999;
+                }
+                @media screen and (min-width: 1025px) {
+                    .content {
+                        padding: 0 15rem;
+                    }
                 }
             `}</style>
         </div>

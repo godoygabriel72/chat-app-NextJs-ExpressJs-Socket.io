@@ -1,7 +1,11 @@
 import Image from 'next/image'
 import { AiFillSetting } from 'react-icons/ai'
+import userStore from '../../store/userStore'
 
 const NavBar = () => {
+
+    const { user } = userStore()
+
     return (
         <>
             <div className='navBar'>
@@ -9,7 +13,7 @@ const NavBar = () => {
                     <div className='userIcon'>
                         <Image src='/userPhoto1.png' alt='userIcon' width={50} height={50}/>
                     </div>
-                    <h4 className='userName'>user name</h4>
+                    <h4 className='userName'>{user?.Nombre}</h4>
                 </div>
                 <AiFillSetting color='white' size={40}/>
             </div>

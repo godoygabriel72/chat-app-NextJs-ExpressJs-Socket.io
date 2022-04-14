@@ -5,7 +5,7 @@ const ChooseUser = ({userList, onClick}) => {
     const handleClick = onClick
 
     return (
-        <div className='position-absolute h-100 w-100 d-flex justify-content-center align-items-center'>
+        <div className='position-absolute h-100 w-100 d-flex justify-content-center align-items-center px-3'>
             <div className='card' style={{width: '25rem'}}>
                 <div className='card-body'>
                     <h5 className='card-title'>Elige una cuenta</h5>

@@ -39,7 +39,7 @@ const MessageInput = ({onSave}) => {
                 button {
                     background: none;
                     border: none;
-                    margin: 0 1rem;
+                    margin: 0 0 0 1rem;
                 }
             `}</style>
         </>

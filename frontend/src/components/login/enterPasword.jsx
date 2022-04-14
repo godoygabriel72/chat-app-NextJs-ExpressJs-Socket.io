@@ -13,7 +13,7 @@ const EnterPassword = ({onSave, onResetUser, email, incorrectPassword}) => {
     })
 
     return (
-        <div className='position-absolute h-100 w-100 d-flex justify-content-center align-items-center'>
+        <div className='position-absolute h-100 w-100 d-flex justify-content-center align-items-center px-3'>
             <form className='card' style={{width: '25rem'}} onSubmit={formik.handleSubmit}>
                 <div className='card-body pb-0'>
                     <h5 className='card-title'>Ingresa la contraseña</h5>
