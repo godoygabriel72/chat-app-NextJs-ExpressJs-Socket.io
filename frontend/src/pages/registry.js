@@ -6,12 +6,13 @@ import Image from 'next/image'
 import { EmailInput, NameInput, PasswordInput } from '../components/registy'
 import styles from '../styles/Registry.module.css'
 import userStore from '../store/userStore'
-import Loader from '../components/loader'
+import Loader from '../components/common/loader'
 import usePost from '../hooks/usePost'
+import LoaderPage from '../components/common/loaderPage'
 
 const Registry = () => {
 
-    const { data, statusCode, error, loading, fetch } = usePost('/auth/singup')
+    const { data, statusCode, error, loading, fetch } = usePost('/auth/signup')
     const { setUser } = userStore()
 
     const router = useRouter()
@@ -30,16 +31,16 @@ const Registry = () => {
         if(statusCode === 200) {
             setUser(data)
             router.push('/')
-        } 
-        (statusCode !== 0 && statusCode !== 200) && console.log('Aparentemente hay un inconveniente')
-        (error) && console.log('Ocurrió un error', error)
+        } else if (statusCode !== 0 && statusCode !== 200) {
+            console.log('Aparentemente hay un inconveniente: ', data)
+        } else if (error) {
+            console.log('Ocurrió un error', error)
+        }
     }, [statusCode])
 
     return (        
         <>
-            {loading && <div className='position-absolute h-100 w-100 d-flex justify-content-center align-items-center zIndex-10'>
-                <Loader />
-            </div>}
+            {loading && <LoaderPage />}
             <div className={styles.contenedor}>
                 <form className={styles.formulario} onSubmit={formik.handleSubmit}>
                     <div className='d-flex justify-content-center'>

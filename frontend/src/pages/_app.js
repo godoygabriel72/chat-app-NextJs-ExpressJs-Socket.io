@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import '../styles/globals.css'
 import Head from 'next/head'
 
-import StaticPage from '../components/staticPage'
+import StaticPage from '../components/common/staticPage'
 import userStore from '../store/userStore'
 import { useEffect } from 'react'
 
@@ -17,18 +17,15 @@ function MyApp({ Component, pageProps }) {
   }, [])
 
   return (user || router.pathname === '/registry' || router.pathname === '/login')? 
-  (
-      <>
-        <Head>
-          <link rel='icon' type='image/x-icon' href='/logo.png' />
-          <title>Chat App</title>
-        </Head>
-        <Component {...pageProps} />
-      </>
-  ) : 
-  (
+    <>
+      <Head>
+        <link rel='icon' type='image/x-icon' href='/logo.png' />
+        <title>Chat App</title>
+      </Head>
+      <Component {...pageProps} />
+    </> : 
     <StaticPage />
-  )
+  
 }
 
 export default MyApp

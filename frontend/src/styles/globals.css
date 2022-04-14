@@ -17,16 +17,8 @@ a {
     overflow-y: scroll;
 }
 
-.zIndex-10 {
-    z-index: 10;
-}
-
-.zIndex-20 {
-    z-index: 20;
-}
-
-.zIndex-30 {
-    z-index: 30;
+.cursorPointer {
+    cursor: pointer;
 }
   
 .outlineHover:hover {

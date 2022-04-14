@@ -1,57 +1,63 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
 
-import StaticPage from '../components/staticPage'
+import StaticPage from '../components/common/staticPage'
 import useGetAll from '../hooks/useGetAll'
+import usePost from '../hooks/usePost'
+import {ChooseUser , EnterPassword} from '../components/login'
+import userStore from '../store/userStore'
+import Loader from '../components/common/loader'
+import LoaderPage from '../components/common/loaderPage'
 
 const Login = () => {
 
-    const [userList, setUserList] = useState([])
-    const { data, statusCode, loading } = useGetAll('/users')
+    const [ selectedUser, setSelectedUser ] = useState(null)
+    const [ userList, setUserList ] = useState([])
+
+    const _getAllUsers = useGetAll('/users')
+    const _signin = usePost('/auth/signin')
+
+    const { setUser } = userStore()
     const router = useRouter()
 
     useEffect(() => {
-        if (statusCode === 200) {
-            data.length? setUserList(data) : router.push('/registry')
-        }
-    }, [statusCode])
+        setUser(null)
+    }, [])
 
-    const handleUserSelect = (Email) => {
-        console.log(Email)
+    useEffect(() => {
+        if (_getAllUsers?.statusCode === 200) {
+            _getAllUsers?.data.length? setUserList(_getAllUsers?.data) : router.push('/registry')
+        }
+    }, [_getAllUsers?.statusCode])
+
+    useEffect(() => {
+        if (_signin.statusCode === 200) {
+            router.push('/')
+            setUser(_signin.data)
+        }
+    }, [_signin.statusCode])
+
+    const handleUserSelect = (usuario) => {
+        setSelectedUser(usuario)
     }
 
-    return (data?.length && !loading)?
-        (
-            <div className='position-absolute h-100 w-100 d-flex justify-content-center align-items-center'>
-                <div className='card' style={{width: '25rem'}}>
-                    <div className='card-body'>
-                        <h5 className='card-title'>Elige una cuenta</h5>
-                        <p className='card-text'>Si no cuentas con una, puedes registrarte primero</p>
-                    </div>
-                    <ul className='list-group list-group-flush'>
-                        {userList.map((user, index) =>
-                            <li className='list-group-item py-1 px-5 outlineHover' key={index} onClick={() => handleUserSelect(user?.Email)}>
-                                <p className='fw-bolder m-0'>{user?.Nombre}</p>
-                                <p className='fw-light m-0'>{user?.Email}</p>
-                            </li>
-                        )}
-                    </ul>
-                    <div className='card-body'>
-                        <Link href='/registry'>
-                            <a className='text-decoration-none d-grid gap-2'>
-                                <button className='btn btn-outline-primary rounded-0'>
-                                    Regístrate
-                                </button>
-                            </a>
-                        </Link>
-                    </div>
-                </div>
-            </div>
-        ) :
-        (
-            <StaticPage />
-        )
+    const handleResetUser = () => {
+        setSelectedUser(null)
+    }
+
+    const handleSubmitForm = (credentials) => {
+        _signin.fetch(credentials)
+    }
+
+    if (!_getAllUsers?.data?.length && _getAllUsers?.loading) return <StaticPage />
+
+    return (!selectedUser? 
+        <ChooseUser userList={userList} onClick={handleUserSelect} /> :
+        <>
+            {_signin.loading && <LoaderPage />}
+            <EnterPassword onSave={handleSubmitForm} onResetUser={handleResetUser} Email={selectedUser?.Email}/> 
+        </>
+    )
 }
 
 export default Login

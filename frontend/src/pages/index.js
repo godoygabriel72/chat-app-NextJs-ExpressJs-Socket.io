@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import io from'socket.io-client'
 
-import Layout from '../components/layout'
-import Chats from '../components/chats'
-import MessageInput from '../components/messageInput'
+import { Chats, MessageInput} from '../components/home'
 import useGetAll from '../hooks/useGetAll'
+import Layout from '../components/layout'
 
 const Home = () => {
 
