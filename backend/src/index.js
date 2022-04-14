@@ -27,5 +27,9 @@ io.on('connection', (socket) => {
     )
 })
 
+app.get('/messages', (req, res) => {
+    res.status(200).json(messages).end()
+})
+
 server.listen(3001)
 console.log('Server on port 3001') 

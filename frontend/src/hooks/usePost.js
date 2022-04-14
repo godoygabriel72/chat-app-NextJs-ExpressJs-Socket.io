@@ -1,17 +1,17 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import Axios from '../../axiosInstance'
 
-const useGetAll = (path) => {
+const usePost = (path) => {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const [statusCode, setStatusCode] = useState(0)
 
-  const handleGetAll = async () => {
+  const handlePost = async (object) => {
     setLoading(true)
     setStatusCode(0)
     try {
-      const { data: response, status } = await Axios.get(path, { validateStatus: false })
+      const { data: response, status } = await Axios.post(path, object, { validateStatus: false })
       setData(response)
       setStatusCode(status)
     } catch (error) {
@@ -21,12 +21,10 @@ const useGetAll = (path) => {
   }
 
   const fetch = useCallback(() => {
-    handleGetAll()
-  }, [handleGetAll])
-
-  useEffect(() => fetch(), [])
+    handlePost();
+  }, [handlePost]);
 
   return { data, loading, error, statusCode, fetch }
 }
 
-export default useGetAll
+export default usePost
