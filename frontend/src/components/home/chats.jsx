@@ -13,7 +13,7 @@ const Chats = ({messages, currentUser}) => {
                         </div> : 
                         <div className="py-1 d-flex justify-content-end" key={index}>
                         <div className='myMessageBox'>
-                            <p className='fw-bolder m-0'>{message?.user?.Nombre}</p>
+                            <p className='fw-bolder m-0'>Tú</p>
                             <p className='fw-light m-0'>{message?.content}</p>
                         </div>
                     </div>

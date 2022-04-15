@@ -48,18 +48,25 @@ const Login = () => {
         _signin.fetch(credentials)
     }
 
-    if (!_getAllUsers?.data?.length && _getAllUsers?.loading) return <StaticPage />
-
-    return (!selectedUser? 
-        <ChooseUser userList={userList} onClick={handleUserSelect} /> :
-        <>
-            {_signin.loading && <LoaderPage />}
-            <EnterPassword  onSave={handleSubmitForm} 
-                            onResetUser={handleResetUser} 
-                            email={selectedUser?.Email}
-                            incorrectPassword={_signin.statusCode === 401}/> 
-        </>
-    )
+    /**
+     * Si la lista tiene usuarios (length > 0) y ya finalizó la petición !(loading === false) la condición es verdadera y se muestra:
+     *      a) La card EnterPassword si es que selectedUser tiene un objeto, que es un truly value.
+     *      b) La card ChooseUser si es que selectedUser es null, que es un falsy value.
+     * Si la lista de usuarios está vacía (length === 0) y ya finalizó la petición !(loading === false), la condición es falsa
+     *      y se muestra StaticPage para tapar el flasheo de esta página hasta que el useEffect realice la redirección a /registry.
+     */
+    return (_getAllUsers.data?.length && !_getAllUsers.loading)? 
+                (selectedUser? 
+                    <>
+                        {_signin.loading && <LoaderPage />}
+                        <EnterPassword  onSave={handleSubmitForm} 
+                                        onResetUser={handleResetUser} 
+                                        email={selectedUser?.Email}
+                                        incorrectPassword={_signin.statusCode === 401}/> 
+                    </> :
+                    <ChooseUser userList={userList} onClick={handleUserSelect} />
+                ) : 
+                <StaticPage />
 }
 
 export default Login
