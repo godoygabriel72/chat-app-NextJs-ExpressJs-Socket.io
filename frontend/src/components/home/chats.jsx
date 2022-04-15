@@ -1,8 +1,18 @@
+import { useEffect, useRef } from 'react'
+
 const Chats = ({messages, currentUser}) => {
+
+    const chatParent = useRef(null)
+
+    useEffect(() => {
+        //Credit: https://stackoverflow.com/questions/37620694/how-to-scroll-to-bottom-in-react by Kai arnold
+        const domNode = chatParent.current
+        domNode && (domNode.scrollTop = domNode.scrollHeight)
+     })
     
     return (
         <>
-            <div className='chatContainer y-scroll'>
+            <div className='chatContainer y-scroll' ref={chatParent}>
                 {messages.map((message, index) =>
                     (currentUser?.id !== message?.user?.id)?
                         <div className="py-1" key={index}>
@@ -24,6 +34,7 @@ const Chats = ({messages, currentUser}) => {
                     width: 100%;
                     height: 90%;
                     overflow: scroll;
+                    padding-bottom: 0.5rem;
                 }             
                 .otherMessageBox {
                     display: inline-block;
@@ -35,7 +46,8 @@ const Chats = ({messages, currentUser}) => {
                     display: inline-block;
                     border-radius: 18px 3px 18px 18px;
                     padding: 0.5rem 2rem;
-                    background: #849FFE;
+                    background: #6F45A1;
+                    color: white;
                 }
             `}</style>
         </>
