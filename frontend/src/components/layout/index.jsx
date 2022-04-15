@@ -14,14 +14,14 @@ const Layout = ({children}) => {
                 .navBar {
                     width: 100vw;
                     height: 4.5rem;
-                    background: #000;
+                    background: #2F2D52;
                 }
                 .content {
                     position: relative;
                     width: 100vw;
                     height: calc(100vh - 4.5rem);
                     padding: 0 1rem;
-                    background: #999;
+                    background: #DCDEF7;
                 }
                 @media screen and (min-width: 1025px) {
                     .content {
