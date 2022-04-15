@@ -20,8 +20,8 @@ const io = new WebSocketServer(server, { cors: { origin: "http://localhost:3000"
 io.on('connection', (socket) => {
     socket.on('client:newMessage', newMessage => {
         const message = {id: uuid(), ...newMessage}
-        socket.emit('server:renderMessage', message)
         messages.push(message)
+        io.emit('server:renderMessage', message)
     })
 })
 
