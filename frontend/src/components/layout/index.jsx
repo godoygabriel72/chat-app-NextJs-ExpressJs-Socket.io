@@ -14,7 +14,7 @@ const Layout = ({children}) => {
                 .navBar {
                     width: 100vw;
                     height: 4.5rem;
-                    background: #2F2D52;
+                    background: #35234E;
                 }
                 .content {
                     position: relative;

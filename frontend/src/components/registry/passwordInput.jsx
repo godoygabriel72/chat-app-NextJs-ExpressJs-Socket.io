@@ -20,7 +20,7 @@ const PasswordInput = ({ formik }) => {
           />
           <label htmlFor='password' className='px-0 text-secondary'>Contraseña</label>
         </div>
-        <span className='input-group-text bg-white pointer' onClick={() => setShowPassword(!showPassword)}>
+        <span className='input-group-text bg-white cursorPointer' onClick={() => setShowPassword(!showPassword)}>
           {showPassword ? <BsEyeSlash /> : <BsEye />}
         </span>
       </div>

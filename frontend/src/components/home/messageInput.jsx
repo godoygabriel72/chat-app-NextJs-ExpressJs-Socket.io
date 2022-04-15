@@ -7,7 +7,7 @@ const MessageInput = ({onSave}) => {
 
     const handleSubmit = event => {
         event.preventDefault()
-        onSave(message)
+        message.length && onSave(message)
         setMessage('')
     }
 
@@ -26,7 +26,7 @@ const MessageInput = ({onSave}) => {
                         onChange={handleChange}
                         autoComplete='off'/>
                 <button type='submit'>
-                    <MdSend size={40} color='white'/>
+                    <MdSend size={40} color='#2F2D52'/>
                 </button>
             </form>
             <style jsx>{`

@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { AiFillSetting } from 'react-icons/ai'
 import userStore from '../../store/userStore'
 
@@ -15,7 +16,11 @@ const NavBar = () => {
                     </div>
                     <h4 className='userName'>{user?.Nombre}</h4>
                 </div>
-                <AiFillSetting color='white' size={40}/>
+                <Link href='/login'>
+                    <a className='text-decoration-none btn btn-outline-light'>
+                        Cerrar Sesión
+                    </a>
+                </Link>
             </div>
             <style jsx>{`
                 .navBar {
