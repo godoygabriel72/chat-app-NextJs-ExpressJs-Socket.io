@@ -35,8 +35,24 @@ app.get('/messages', (req, res) => {
 
 app.get('/users', (req, res) => {
     let usersList = []
-    users.forEach( ({id, Nombre, Email}) => usersList.push({id, Nombre, Email}) )
+    users.forEach( ({id, Nombre, Email, Avatar}) => usersList.push({id, Nombre, Email, Avatar}) )
     res.status(200).json(usersList).end()
+})
+
+app.put('/users/:id', async (req, res) => {
+    const id = req.params.id
+    const user = req.body
+    const PasswordHash = (user?.Password)? await encryptPassword(user?.Password) : null
+    const userIndex = users.findIndex(currentUser => currentUser.id === id)
+    const updatedUser = {
+        id: id,
+        Nombre: user?.Nombre ?? users[userIndex].Nombre,
+        Email: user?.Email ?? users[userIndex].Email,
+        Password: PasswordHash ?? users[userIndex].Password,
+        Avatar: user?.Avatar ?? users[userIndex].Avatar
+    }
+    users[userIndex] = updatedUser
+    res.status(200).end()
 })
 
 app.post('/auth/signup', (req, res) => {
@@ -44,7 +60,7 @@ app.post('/auth/signup', (req, res) => {
         const { Nombre, Email, Password } = req.body
         if(Nombre && Email && Password) {
             const PasswordHash = await encryptPassword(Password)
-            const user = { id: uuid(), Nombre, Email, Password: PasswordHash }
+            const user = { id: uuid(), Nombre, Email, Password: PasswordHash, Avatar: null }
             users.push(user)
             let userCopy = {...user }
             delete userCopy.Password
