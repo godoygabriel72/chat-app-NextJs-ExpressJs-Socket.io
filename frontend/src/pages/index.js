@@ -15,11 +15,11 @@ const Home = () => {
     const socket = useSocket('http://localhost:3001/')
     const {user, setUser} = userStore()
 
-    socket && socket.on('server:renderMessage', data => {
-        setListMessages([...listMessages, data])
+    socket?.on('server:renderMessage', data => {
+        listMessages && setListMessages([...listMessages, data])
     })
 
-    socket && socket.on('server:loadMessages', data => {
+    socket?.on('server:loadMessages', data => {
         setListMessages(data)
     })
 
