@@ -31,7 +31,7 @@ const Chats = ({messages, currentUser, onDelete}) => {
         <>
             <ConfirmDeleteModal show={messageToDelete} onClose={handleCloseModal} onSave={handleConfirmModal} />
             <div className='chatContainer y-scroll' ref={chatParent}>
-                {messages.map((message, index) =>
+                {messages?.map((message, index) =>
                     (currentUser?.id !== message?.user?.id)?
                         <div className='py-1' key={index}>
                             <div className='otherMessageBox'>

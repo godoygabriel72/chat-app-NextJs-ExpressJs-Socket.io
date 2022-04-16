@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 const ChooseUser = ({userList, onClick}) => {
 
@@ -13,9 +14,15 @@ const ChooseUser = ({userList, onClick}) => {
                 </div>
                 <ul className='list-group list-group-flush'>
                     {userList.map((user, index) =>
-                        <li className='list-group-item py-1 px-5 outlineHover' key={index} onClick={() => handleClick(user)}>
-                            <p className='fw-bolder m-0'>{user?.Nombre}</p>
-                            <p className='fw-light m-0'>{user?.Email}</p>
+                        <li className='list-group-item py-1 px-4 outlineHover d-flex' key={index} onClick={() => handleClick(user)}>
+                            <Image  src={(user?.Avatar)? `/animal_avatar_set/${user?.Avatar}` : '/user.png'} 
+                                    className='cursorPointer' 
+                                    alt='userIcon' width={50} height={50} 
+                                    onClick={() => onSave(fileName)}/>
+                            <div className='mx-2'>
+                                <p className='fw-bolder m-0'>{user?.Nombre}</p>
+                                <p className='fw-light m-0'>{user?.Email}</p>
+                            </div>
                         </li>
                     )}
                 </ul>

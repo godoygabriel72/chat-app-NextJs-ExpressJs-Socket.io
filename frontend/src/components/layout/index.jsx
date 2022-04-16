@@ -1,11 +1,11 @@
 import NavBar from './navBar'
 
-const Layout = ({children}) => {
+const Layout = ({children, onChangeUserIcon}) => {
 
     return (
         <div className='position-absolute h-100 w-100'>
             <div className='navBar'>
-                <NavBar />
+                <NavBar onChangeUserIcon={onChangeUserIcon} />
             </div>
             <div className='content'>
                 {children}

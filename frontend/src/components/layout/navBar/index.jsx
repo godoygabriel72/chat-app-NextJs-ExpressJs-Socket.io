@@ -1,18 +1,37 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { AiFillSetting } from 'react-icons/ai'
-import userStore from '../../store/userStore'
+import { useState } from 'react'
+import userStore from '../../../store/userStore'
+import SelectUserIcon from './SelectUserIconModal'
 
-const NavBar = () => {
+const NavBar = ({ onChangeUserIcon }) => {
 
     const { user } = userStore()
+    const [showModal, setShowModal] = useState(false)
+
+    const handleShowModal = () => {
+        setShowModal(true)
+    }
+
+    const handleCloseModal = () => {
+        setShowModal(false)
+    }
+
+    const handleSelectAvatar = fileName => {
+        setShowModal(false)
+        onChangeUserIcon(fileName)
+    }
 
     return (
         <>
+            <SelectUserIcon show={showModal} onSave={handleSelectAvatar} onClose={handleCloseModal}/>
             <div className='navBar'>
                 <div className='userContent'>
                     <div className='userIcon'>
-                        <Image src='/userPhoto1.png' alt='userIcon' width={50} height={50}/>
+                        <Image  src={user.Avatar? `/animal_avatar_set/${user.Avatar}` : '/user.png' }
+                                className='cursorPointer' 
+                                alt='userIcon' width={50} height={50} 
+                                onClick={handleShowModal}/>
                     </div>
                     <h4 className='userName'>{user?.Nombre}</h4>
                 </div>

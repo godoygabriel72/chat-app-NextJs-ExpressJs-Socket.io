@@ -5,13 +5,15 @@ import useGetAll from '../hooks/useGetAll'
 import userStore from '../store/userStore'
 import useSocket from '../hooks/useSocket'
 import Layout from '../components/layout'
+import usePut from '../hooks/usePut'
 
-const Home = () => {    //402E58    745C9A
+const Home = () => { 
 
-    const {data: messages, statusCode} = useGetAll('/messages')
+    const _messagesGet = useGetAll('/messages')
+    const _usersPut = usePut('users')
     const [listMessages, setListMessages] = useState([])
     const socket = useSocket('http://localhost:3001/')
-    const {user} = userStore()
+    const {user, setUser} = userStore()
 
     socket && socket.on('server:renderMessage', data => {
         setListMessages([...listMessages, data])
@@ -29,12 +31,19 @@ const Home = () => {    //402E58    745C9A
         socket.emit('client:deleteMessage', message)
     }
 
+    const handleChangeUserIcon = iconName => {
+        const setedUser = {...user}
+        setedUser.Avatar = iconName
+        setUser(setedUser)
+        _usersPut.fetch(setedUser, setedUser.id)
+    }
+
     useEffect(() => {
-        (statusCode === 200) && setListMessages(messages)
-    }, [statusCode])
+        (_messagesGet.statusCode === 200) && setListMessages(_messagesGet.messages)
+    }, [_messagesGet.statusCode])
 
     return (
-        <Layout>
+        <Layout onChangeUserIcon={handleChangeUserIcon}>
             <Chats messages={listMessages} currentUser={user} onDelete={handleDeleteMessage} />
             <MessageInput onSave={handleSaveMessage} />
         </Layout>
