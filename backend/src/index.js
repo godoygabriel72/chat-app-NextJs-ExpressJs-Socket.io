@@ -6,8 +6,8 @@ import cors from 'cors'
 
 import { encryptPassword, comparePassword } from './utils'
 
-const messages = []
-const users = []
+let messages = []
+let users = []
 
 const app = express()
 app.use(express.json());
@@ -22,6 +22,10 @@ io.on('connection', (socket) => {
         const message = {id: uuid(), ...newMessage}
         messages.push(message)
         io.emit('server:renderMessage', message)
+    })
+    socket.on('client:deleteMessage', message => {
+        messages = messages.filter(currentMessage => currentMessage.id !== message.id)
+        io.emit('server:loadMessages', messages)
     })
 })
 
