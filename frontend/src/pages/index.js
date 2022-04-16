@@ -17,8 +17,16 @@ const Home = () => {    //402E58    745C9A
         setListMessages([...listMessages, data])
     })
 
-    const handleSave = message => {
+    socket && socket.on('server:loadMessages', data => {
+        setListMessages(data)
+    })
+
+    const handleSaveMessage = message => {
         socket.emit('client:newMessage', { user: {id: user?.id, Nombre: user?.Nombre}, content: message })
+    }
+
+    const handleDeleteMessage = message => {
+        socket.emit('client:deleteMessage', message)
     }
 
     useEffect(() => {
@@ -27,8 +35,8 @@ const Home = () => {    //402E58    745C9A
 
     return (
         <Layout>
-            <Chats messages={listMessages} currentUser={user} />
-            <MessageInput onSave={handleSave} />
+            <Chats messages={listMessages} currentUser={user} onDelete={handleDeleteMessage} />
+            <MessageInput onSave={handleSaveMessage} />
         </Layout>
     )
 }
